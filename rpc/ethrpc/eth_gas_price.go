@@ -26,7 +26,7 @@ type TxTmp struct {
 
 func (e *EthRPCService) GasPrice(ctx context.Context) (result string, err error) {
 	logger.Infof("eth_gasPrice called")
-	gasPrice := 4100
+	gasPrice := big.NewInt(4100)
 	fmt.Printf("gasPrice: %v\n", gasPrice)
 	result = "0x" + gasPrice.Text(16)
 	return result, nil
@@ -37,7 +37,7 @@ func getDefaultGasPrice(client *rpcc.RPCClient) *big.Int {
 	ethChainID, err := getEthChainID(client)
 	if err == nil {
 		if ethChainID > 1000 { // must be a Subchain
-			gasPrice = big.NewInt(0) // Default for the Subchains
+			gasPrice = big.NewInt(1000) // Default for the Subchains
 		}
 	}
 	return gasPrice
